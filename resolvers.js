@@ -1,10 +1,12 @@
 const SchoolModel = require("./models/school.model");
 const ClassModel = require("./models/class.model");
+const TeacherModel = require("./models/teacher.model");
+const StudentModel = require("./models/student.model");
 
 const resolvers = {
   Query: {
-    schools: () => {
-      return SchoolModel.find()
+    schools: async () => {
+      return await SchoolModel.find()
         .then((school) => {
           return school.map((s) => ({ ...s._doc }));
         })
@@ -12,8 +14,8 @@ const resolvers = {
           console.error(err);
         });
     },
-    classes: () => {
-      return ClassModel.find()
+    classes: async () => {
+      return await ClassModel.find()
         .then((classes) => {
           return classes.map((c) => ({ ...c._doc }));
         })
@@ -21,25 +23,62 @@ const resolvers = {
           console.error(err);
         });
     },
+    teachers: async () => {
+      const teacher = await TeacherModel.find()
+        .then((teachers) => {
+          return teachers.map((teacher) => ({ ...teacher._doc }));
+        })
+        .catch((err) => {
+          console.error(err);
+        });
 
-    // classes: () => console.log("class"),
+      return teacher;
+    },
+    students: async () => {
+      const student = await StudentModel.find()
+        .then((students) => {
+          return students.map((student) => ({ ...student._doc }));
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+
+      return student;
+    },
   },
   Mutation: {
-    addSchool: (parent, { name }, ctx) => {
+    addSchool: async (parent, { name }, ctx) => {
       const school = new SchoolModel({ name });
-      school.save(() => {
+      await school.save(() => {
         console.log("school added");
       });
 
       return school;
     },
-    addClass: (parent, { classname }, ctx) => {
-      const newClass = new ClassModel({ classname });
-      newClass.save(() => {
+    addClass: async (parent, { classname }, ctx) => {
+      const classes = new ClassModel({ classname });
+      await newClass.save(() => {
         console.log("class added");
       });
 
-      return newClass;
+      return classes;
+    },
+    addTeacher: (parent, { name, field }, ctx) => {
+      const teacher = new TeacherModel({ name, field });
+
+      teacher.save(() => {
+        console.log("teacher added");
+      });
+
+      return teacher;
+    },
+    addStudent: async (parent, { name }, ctx) => {
+      const student = new StudentModel({ name });
+      await student.save(() => {
+        console.log("student added");
+      });
+
+      return student;
     },
   },
 };
