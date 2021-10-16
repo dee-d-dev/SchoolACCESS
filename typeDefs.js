@@ -32,6 +32,8 @@ const typeDefs = gql`
     classes: [Class!]!
     teachers: [Teacher!]!
     students: [Student!]!
+    getSchoolById(id: ID): School 
+    school(name: String): School
   }
 
   type Mutation {

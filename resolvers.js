@@ -45,6 +45,21 @@ const resolvers = {
 
       return student;
     },
+    school: async (parent, { name }, ctx) => {
+      // const school = await SchoolModel.find().then((schools) => {
+      //   return schools.filter((s) => {
+      //     if (s._doc.name === name) return { ...s._doc.name };
+      //   });
+      // });
+
+      const school = await SchoolModel.findOne({name})
+
+      return school;
+    },
+    getSchoolById: async(parent, {id}, ctx)=>{
+      return await SchoolModel.findById(id)
+
+    }
   },
   Mutation: {
     addSchool: async (parent, { name }, ctx) => {
@@ -57,7 +72,7 @@ const resolvers = {
     },
     addClass: async (parent, { classname }, ctx) => {
       const classes = new ClassModel({ classname });
-      await newClass.save(() => {
+      await classes.save(() => {
         console.log("class added");
       });
 
