@@ -4,7 +4,7 @@ const SchoolSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
-  },
+  }
 });
 
 const SchoolModel = mongoose.model("school", SchoolSchema);

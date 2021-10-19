@@ -4,13 +4,16 @@ const typeDefs = gql`
   type School {
     name: String!
     id: ID!
+    classes: [Class!]
+    # students: [Student]
   }
 
   type Class {
     id: ID!
     classname: String!
-    teacher: Teacher
-    students: [Student]
+    teacher: String!
+    school: String!
+    # students: [Student]
   }
 
   type Teacher {
@@ -22,9 +25,9 @@ const typeDefs = gql`
   type Student {
     id: ID!
     name: String!
-    # sex: String!
-    # age: String!
-    # class: Class
+    sex: String!
+    age: String!
+    class: Class
   }
 
   type Query {
@@ -32,13 +35,14 @@ const typeDefs = gql`
     classes: [Class!]!
     teachers: [Teacher!]!
     students: [Student!]!
-    getSchoolById(id: ID): School 
-    school(name: String): School
+    getSchoolById(id: ID!): School!
+    school(name: String!): School!
+
   }
 
   type Mutation {
     addSchool(name: String!): School!
-    addClass(classname: String!): Class!
+    addClass(classname: String!, teacher: String!, school: String!): Class!
     addTeacher(name: String!, field: String!): Teacher!
     addStudent(name: String!): Student!
   }
