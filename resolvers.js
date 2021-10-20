@@ -26,7 +26,7 @@ const resolvers = {
     },
     getSchoolById: async (parent, { id }, ctx) => {
       return await SchoolModel.findById(id);
-    }
+    },
   },
   School: {
     classes: (parent, args, ctx) => {
@@ -39,6 +39,7 @@ const resolvers = {
   //     console.log(parent);
   //   },
   // },
+
   Mutation: {
     addSchool: async (parent, { name }, ctx) => {
       const school = new SchoolModel({ name });
